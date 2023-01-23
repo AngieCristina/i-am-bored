@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 import {
   ChakraProvider,
   Box,
@@ -8,31 +8,67 @@ import {
   Code,
   Grid,
   theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+} from "@chakra-ui/react";
+import { ColorModeSwitcher } from "./ColorModeSwitcher";
+import { Logo } from "./Logo";
+import { useEffect, useState } from "react";
 
-export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
-  </ChakraProvider>
-)
+interface Activity {
+  activity: string;
+  accessibility: number;
+  type: string;
+  participants: number;
+  price: number;
+  link: string;
+  key: string;
+}
+
+function App() {
+  const [activities, setActivities] = useState<Activity>();
+  const [loading, setLoading] = useState(true);
+  const [participants, setParticipants] = useState("");
+
+  const fetchActivityData = () => {
+    fetch(`https://www.boredapi.com/api/activity?participants=${participants}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setLoading(false);
+        setActivities(data);
+      });
+  };
+  useEffect(() => {
+    fetchActivityData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [participants]);
+
+  if (loading) {
+    return <div>loading</div>;
+  }
+
+  if (!activities) return null;
+
+  return (
+    <div>
+      {Object.keys(activities).map((key) => (
+        <li key={key}>
+          <b>{key}</b> : {activities[key as keyof Activity]}
+        </li>
+      ))}
+      <label>
+        Participants:
+        <input
+          type="number"
+          value={participants}
+          onChange={(e) => setParticipants(e.target.value)}
+          max={5}
+          required={false}
+          placeholder="max. 6 participants "
+        />
+      </label>
+    </div>
+  );
+}
+
+export default App;
