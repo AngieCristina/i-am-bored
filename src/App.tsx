@@ -55,31 +55,33 @@ function App() {
 
   return (
     <Box display="flex">
-      <Card
-        overflow="hidden"
-        border="1px solid #000"
-        margin="auto"
-      >
-        <Stack>
-          <CardBody>
-            {activity && (
-              <Box>
-                <Heading size="xs">{activity.activity}</Heading>
-                <Text>boring people: {activity.participants}</Text>
-              </Box>
-            )}
-          </CardBody>
-
+      <Card overflow="hidden" border="1px solid #000" margin="auto">
+        <Stack m="40px">
           <Input
+            size="ms"
+            width='auto'
+            focusBorderColor="lime"
+            placeholder="How many boring people? - Max.5 "
             type="number"
             value={participants}
             onChange={(e) => {
-              setParticipants(e.target.value);
+              let input = e.target.value;
+              if (!/^[1-5]$/.test(input)) {
+                setParticipants("");
+              } else {
+                setParticipants(input);
+              }
             }}
+            min={1}
             max={5}
-            required={false}
-            placeholder="how many boring people?"
           />
+          <CardBody>
+            {activity && (
+              <Box>
+                <Heading size="lg">{activity.activity}</Heading>
+              </Box>
+            )}
+          </CardBody>
 
           <CardFooter>
             <Image
