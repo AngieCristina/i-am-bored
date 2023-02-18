@@ -16,6 +16,7 @@ import {
   CardFooter,
   Stack,
   Image,
+  HStack,
 } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import { Logo } from "./Logo";
@@ -55,40 +56,47 @@ function App() {
 
   return (
     <Box display="flex">
-      <Card overflow="hidden" border="1px solid #000" margin="auto">
-        <Stack m="40px">
-          <Input
-            size="ms"
-            width='auto'
-            focusBorderColor="lime"
-            placeholder="How many boring people? - Max.5 "
-            type="number"
-            value={participants}
-            onChange={(e) => {
-              let input = e.target.value;
-              if (!/^[1-5]$/.test(input)) {
-                setParticipants("");
-              } else {
-                setParticipants(input);
-              }
-            }}
-            min={1}
-            max={5}
-          />
-          <CardBody>
-            {activity && (
-              <Box>
-                <Heading size="lg">{activity.activity}</Heading>
-              </Box>
-            )}
-          </CardBody>
-
-          <CardFooter>
+      <Card
+        overflow="hidden"
+        border="3px solid #000"
+        margin="auto"
+        mt="60px"
+        shadow="lg"
+        borderWidth="3px"
+      >
+        <Stack m="40px" spacing="24px">
+          <HStack display="flex" justifyContent="center">
+            <text fontSize="xl">How many boring people?</text>
+            <Input
+              h="46px"
+              w="86px"
+              placeholder="Max. 5"
+              focusBorderColor="lime"
+              type="number"
+              value={participants}
+              onChange={(e) => {
+                let input = e.target.value;
+                if (!/^[1-5]$/.test(input)) {
+                  setParticipants("");
+                } else {
+                  setParticipants(input);
+                }
+              }}
+              min={1}
+              max={5}
+            />
+          </HStack>
+          <CardFooter justifyContent="center">
             <Image
               src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/d6649a62874689.5a9ea800b1d58.jpg"
               alt="bored"
             />
           </CardFooter>
+          {activity && (
+            <Heading maxW="32rem" noOfLines={2} size="lg">
+              {activity.activity}
+            </Heading>
+          )}
         </Stack>
       </Card>
     </Box>
