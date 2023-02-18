@@ -10,9 +10,14 @@ i-am-bored project use data from : (https://www.boredapi.com/)
 
 You need to install React.js and Chakra UI :
 
-1. yarn install
-2.`yarn add @chakra-ui/react @emotion/react @emotion/styled framer-motion`
-3. yarn start
-4. Runs the app in the development mode.<br /> Open
-[http://localhost:3000](http://localhost:3000) to view it in the browser.
+1.  Install dependencies:
+```
+yarn install
+```
+2. Runs the app in the development mode.
+
+```
+yarn start
+```
+3. Open the app http://localhost:3000 to view it in the browser.
 
