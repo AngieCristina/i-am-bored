@@ -55,48 +55,58 @@ function App() {
   }
 
   return (
-    <Box display="flex">
-      <Card
-        overflow="hidden"
-        border="3px solid #000"
-        margin="auto"
-        mt="60px"
-        shadow="lg"
-        borderWidth="3px"
-      >
-        <Stack m="40px" spacing="24px">
-          <HStack display="flex" justifyContent="center">
-            <text fontSize="xl">How many boring people?</text>
-            <Input
-              h="46px"
-              w="86px"
-              placeholder="Max. 5"
-              focusBorderColor="lime"
-              type="number"
-              value={participants}
-              onChange={(e) => {
-                let input = e.target.value;
-                if (!/^[1-5]$/.test(input)) {
-                  setParticipants("");
-                } else {
-                  setParticipants(input);
-                }
-              }}
-              min={1}
-              max={5}
-            />
+    <Box display="flex" justifyContent="center" alignItems="center" h="100vh">
+      <Card overflow="hidden" shadow="lg">
+        <Stack m="60px" spacing="100px">
+          <HStack display="flex" flexDirection="column" justifyContent="center">
+            <Box display="flex" alignItems="center">
+              <Text fontSize="xs">How many boring people?</Text>
+              <Input
+                h="46px"
+                w="86px"
+                ml="2"
+                placeholder="Max. 5"
+                focusBorderColor="lime"
+                type="number"
+                value={participants}
+                onChange={(e) => {
+                  let input = e.target.value;
+                  if (!/^[1-5]$/.test(input)) {
+                    setParticipants("");
+                  } else {
+                    setParticipants(input);
+                  }
+                }}
+                min={1}
+                max={5}
+              />
+            </Box>
+            <Box p={4}>
+              {activity && (
+                <Image
+                  w="20"
+                  src="https://www.svgrepo.com/show/188346/pointing-down-finger.svg"
+                ></Image>
+              )}
+            </Box>
+            {activity && <Heading size="xl">{activity.activity}</Heading>}
+
+            <CardHeader mt={20} justifyContent="center">
+              {!activity && (
+                <Image
+                  src="https://i.pinimg.com/564x/49/be/b1/49beb13e6172a8017a1adae8ee584a09.jpg"
+                  alt="bored"
+                />
+              )}
+              {activity && (
+                <Image
+                  boxSize="150px"
+                  src="https://i.pinimg.com/564x/dc/09/04/dc09046fd93d997cb22c8c41ab4d0eeb.jpg"
+                  alt="notbored"
+                />
+              )}
+            </CardHeader>
           </HStack>
-          <CardFooter justifyContent="center">
-            <Image
-              src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/d6649a62874689.5a9ea800b1d58.jpg"
-              alt="bored"
-            />
-          </CardFooter>
-          {activity && (
-            <Heading maxW="32rem" noOfLines={2} size="lg">
-              {activity.activity}
-            </Heading>
-          )}
         </Stack>
       </Card>
     </Box>
